@@ -1,0 +1,190 @@
+package pt.tecnico.grupo6.myDrive.domain;
+
+class MyDrive{
+	Integer autoIncrement;
+}
+
+relation DomainRootHasMyDriveApplication {
+  .pt.ist.fenixframework.DomainRoot playsRole domainRoot{
+  	multiplicity 0..1;
+  }
+  MyDrive playsRole application{
+  	multiplicity 0..1;
+  }
+}
+
+class User{
+	String username;
+	String password;
+	String name;
+	String mask;
+}
+
+relation MyDriveHasUsers {
+  MyDrive playsRole myDrive{
+  	multiplicity 1;
+  }
+  User playsRole users{
+  	multiplicity 0..*;
+  }
+}
+
+class Root extends User;
+
+class Guest extends User;
+
+relation MyDriveHasRootUser{
+  MyDrive playsRole fileSystemRoot{
+  	multiplicity 1;
+  }
+  Root playsRole rootUser{
+  	multiplicity 1;
+  }
+}
+
+relation MyDriveHasGuestUser{
+  MyDrive playsRole fileSystemGuest{
+  	multiplicity 1;
+  }
+  Guest playsRole guestUser{
+  	multiplicity 1;
+  }
+}
+
+class File{
+	Integer id;
+	String name;
+	String mask;
+	LocalDate lastChange;
+}
+
+class PlainFile extends File{
+	String content;
+}
+
+class Link extends File{
+	String path;
+}
+
+class Application extends File{
+	String method;
+}
+
+class Directory extends File;
+
+relation UserHasFiles {
+	User playsRole owner {
+		multiplicity 1;
+	}
+	File playsRole files {
+		multiplicity 0..*;
+	}
+}
+
+class RootDirectory extends Directory;
+class HomeDirectory extends Directory;
+
+relation MyDriveHasRootFolder {
+	MyDrive playsRole myDriveRoot {
+		multiplicity 1;
+	}
+	RootDirectory playsRole rootFolder {
+		multiplicity 1;
+	}
+}
+
+relation MyDriveHasHomeFolder {
+	MyDrive playsRole myDriveHome {
+		multiplicity 1;
+	}
+	HomeDirectory playsRole homeFolder {
+		multiplicity 1;
+	}
+}
+
+relation UserHasHome{
+	User playsRole user {
+		multiplicity 1;
+	}
+	Directory playsRole home {
+		multiplicity 1;
+	}
+}
+
+relation DirectoryHasFiles{
+	Directory playsRole parent {
+		multiplicity 1;
+	}
+	File playsRole directoryFiles {
+		multiplicity 0..*;
+	}
+}
+
+class Login{
+	Long token;
+	DateTime expirationDate;
+}
+
+class EnvironmentVariable{
+	String name;
+	String value;
+}
+
+relation LoginHasEnvironmentVariables{
+	Login playsRole login{
+		multiplicity 1;
+	}
+	EnvironmentVariable playsRole sessionVariables{
+		multiplicity 0..*;
+	}
+}
+
+relation UserHasLogins{
+	User playsRole loggedUser{
+		multiplicity 1;
+	}
+
+	Login playsRole session{
+		multiplicity 0..*;
+	}
+}
+
+relation MyDriveHasLogins{
+	MyDrive playsRole myDriveLogin{
+		multiplicity 1;
+	}
+	Login playsRole logins{
+		multiplicity 0..*;
+	}
+}
+
+relation LoginHasCurrentWorkingDirectory{
+	Login playsRole loginSession{
+		multiplicity 0..*;
+	}
+	Directory playsRole currentWorkingDirectory{
+		multiplicity 1;
+	}
+}
+
+class FileAssociation{
+	String fileExtension;
+}
+
+relation UserHasFileAssociations{
+	User playsRole assocUser{
+		multiplicity 1;
+	}
+	FileAssociation playsRole associations{
+		multiplicity 0..1;
+	}
+}
+
+relation FilesHaveAssociations{
+	PlainFile playsRole assocFile{
+		multiplicity 0..*;
+	}
+	FileAssociation playsRole association{
+		multiplicity 1;
+	}
+}

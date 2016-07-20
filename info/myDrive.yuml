@@ -1,0 +1,37 @@
+[MyDrive| Integer autoIncrement;]
+[.pt.ist.fenixframework.DomainRoot]0..1 domainRoot - application 0..1[MyDrive] // DomainRootHasMyDriveApplication
+[User| String username; String password; String name; String mask;]
+[MyDrive]1 myDrive - users 0..*[User] // MyDriveHasUsers
+[User]^-[Root]
+[Root]
+[User]^-[Guest]
+[Guest]
+[MyDrive]1 fileSystemRoot - rootUser 1[Root] // MyDriveHasRootUser
+[MyDrive]1 fileSystemGuest - guestUser 1[Guest] // MyDriveHasGuestUser
+[File| Integer id; String name; String mask; LocalDate lastChange;]
+[File]^-[PlainFile]
+[PlainFile| String content;]
+[File]^-[Link]
+[Link| String path;]
+[File]^-[Application]
+[Application| String method;]
+[File]^-[Directory]
+[Directory]
+[User]1 owner - files 0..*[File] // UserHasFiles
+[Directory]^-[RootDirectory]
+[RootDirectory]
+[Directory]^-[HomeDirectory]
+[HomeDirectory]
+[MyDrive]1 myDriveRoot - rootFolder 1[RootDirectory] // MyDriveHasRootFolder
+[MyDrive]1 myDriveHome - homeFolder 1[HomeDirectory] // MyDriveHasHomeFolder
+[User]1 user - home 1[Directory] // UserHasHome
+[Directory]1 parent - directoryFiles 0..*[File] // DirectoryHasFiles
+[Login| Long token; DateTime expirationDate;]
+[EnvironmentVariable| String name; String value;]
+[Login]1 login - sessionVariables 0..*[EnvironmentVariable] // LoginHasEnvironmentVariables
+[User]1 loggedUser - session 0..*[Login] // UserHasLogins
+[MyDrive]1 myDriveLogin - logins 0..*[Login] // MyDriveHasLogins
+[Login]0..* loginSession - currentWorkingDirectory 1[Directory] // LoginHasCurrentWorkingDirectory
+[FileAssociation| String fileExtension;]
+[User]1 assocUser - associations 0..1[FileAssociation] // UserHasFileAssociations
+[PlainFile]0..* assocFile - association 1[FileAssociation] // FilesHaveAssociations

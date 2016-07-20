@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<myDrive id="4" autoIncrement="17">
+  <filesystem>
+    <directory id="1" lastChange="2016-05-22">
+      <name>home</name>
+      <owner>root</owner>
+      <directoryFiles>
+        <directory id="2" lastChange="2016-05-22">
+          <name>root</name>
+          <owner>root</owner>
+          <directoryFiles />
+        </directory>
+        <directory id="3" lastChange="2016-05-22">
+          <name>nobody</name>
+          <owner>nobody</owner>
+          <directoryFiles />
+        </directory>
+        <directory id="4" lastChange="2016-05-22">
+          <name>user1</name>
+          <owner>user1</owner>
+          <directoryFiles>
+            <directory id="6" lastChange="2016-05-22">
+              <name>myDir</name>
+              <owner>user1</owner>
+              <directoryFiles>
+                <plainFile id="8" lastChange="2016-05-22">
+                  <name>myPlainFile</name>
+                  <owner>user1</owner>
+                  <content />
+                </plainFile>
+                <application id="7" lastChange="2016-05-22">
+                  <name>myApp</name>
+                  <owner>user1</owner>
+                  <method />
+                </application>
+              </directoryFiles>
+            </directory>
+          </directoryFiles>
+        </directory>
+        <directory id="5" lastChange="2016-05-22">
+          <name>user2</name>
+          <owner>user2</owner>
+          <directoryFiles />
+        </directory>
+      </directoryFiles>
+    </directory>
+  </filesystem>
+  <users>
+    <user>
+      <username>user1</username>
+      <name>user1</name>
+      <password>12345678</password>
+      <mask>rwxd----</mask>
+    </user>
+    <user>
+      <username>user2</username>
+      <name>user2</name>
+      <password>12345678</password>
+      <mask>rwxd----</mask>
+    </user>
+    <user>
+      <username>nobody</username>
+      <name>Guest</name>
+      <password />
+      <mask>rwxdr-x-</mask>
+    </user>
+    <user>
+      <username>root</username>
+      <name>Super User</name>
+      <password>***</password>
+      <mask>rwxdr-x-</mask>
+    </user>
+  </users>
+</myDrive>
